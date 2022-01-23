@@ -1,0 +1,35 @@
+{
+    "aliClientSettings": {
+        "accessKeyId":"your_access_key_Id",
+        "accessSecret":"your_access_secret"
+    },
+
+    "logSettings": {
+        "logFileName": "ddnslog.log",
+        "logLevel": "info",
+        "//": "available log level: debug, info, warning"
+    },
+
+    "getIPUrls": {
+        "IPv4": "https://api-ipv4.ip.sb/ip",
+        "IPv6": "https://api-ipv6.ip.sb/ip"
+    },
+
+    "domainSettings": [
+        {
+            "enabled": false,
+            "recordType": "A",
+            "createNewRecord": true,
+            "domainName": "your_domain1.com",
+            "subdomains": ["@", "www", "dns"],
+            "//": "This will enable IPv4 ddns for @.your_domain1.com, www.your_domain1.com and dns.your_domain1.com"
+        },
+        {
+            "enabled": true,
+            "recordType": "AAAA",
+            "createNewRecord": true,
+            "domainName": "your_domain2.com",
+            "subdomains": ["@", "www", "live"]
+        }
+    ]
+}
