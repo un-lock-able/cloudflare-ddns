@@ -1,9 +1,4 @@
 {
-    "aliClientSettings": {
-        "accessKeyId":"your_access_key_Id",
-        "accessSecret":"your_access_secret"
-    },
-
     "logSettings": {
         "logFileName": "ddnslog.log",
         "logLevel": "info",
@@ -18,18 +13,46 @@
     "domainSettings": [
         {
             "enabled": false,
+            "zoneID": "your_zone_ID",
+            "apiToken": "your_api_token",
             "recordType": "A",
             "createNewRecord": true,
             "domainName": "your_domain1.com",
-            "subdomains": ["@", "www", "dns"],
+            "subdomains": [
+                {
+                    "name": "@"
+                },
+                {
+                    "name": "www",
+                    "ttl": 1,
+                    "proxied": false,
+                    "//":"ttl and proxied are both optional; set 1 in ttl for automatic; proxied default to true."
+                }
+            ],
             "//": "This will enable IPv4 ddns for @.your_domain1.com, www.your_domain1.com and dns.your_domain1.com"
         },
         {
             "enabled": true,
+            "zoneID": "your_zone_ID",
+            "apiToken": "your_api_token",
             "recordType": "AAAA",
             "createNewRecord": true,
             "domainName": "your_domain2.com",
-            "subdomains": ["@", "www", "live"]
+            "subdomains": [
+                {
+                    "name": "@"
+                },
+                {
+                    "name": "live",
+                    "proxied": false
+                },
+                {
+                    "name": "www",
+                    "ttl": 1,
+                    "proxied": false,
+                    "//":"ttl and proxied are both optional; set 1 in ttl for automatic; proxied default to true."
+                }
+            ]
         }
     ]
 }

@@ -1,14 +1,11 @@
 from DomainRecordChanger import DomainRecordChanger
 from SettingsManger import SettingsManager
-from aliyunsdkcore.client import AcsClient
 import logging
 import sys
 
 
 class DDNS:
     settings_manager = None
-    ali_client_settings = None
-    ali_client = None
     ip_url = None
     domain_settings = None
 
@@ -29,12 +26,11 @@ class DDNS:
 
     @staticmethod
     def read_settings():
-        DDNS.ali_client_settings = DDNS.settings_manager.get_ali_client()
         DDNS.ip_url = DDNS.settings_manager.get_ip_url()
         DDNS.domain_settings = DDNS.settings_manager.get_domain_settings()
 
     @staticmethod
-    def main(settings_path="aliddnsSettings.json"):
+    def main(settings_path="cloudflareddnsSettings.json.example"):
         DDNS.settings_manager = SettingsManager(settings_path)
         if not DDNS.settings_manager.is_valid:
             sys.exit(1)
@@ -45,11 +41,8 @@ class DDNS:
             sys.exit(1)
         else:
             pass
-        logging.info("--------DDNS script started--------")
-        DDNS.ali_client = AcsClient(DDNS.ali_client_settings["accessKeyId"],
-                                    DDNS.ali_client_settings["accessSecret"])
-
+        # logging.info("--------DDNS script started--------")
         for single_domain_config in DDNS.domain_settings:
-            dm = DomainRecordChanger(DDNS.ali_client, DDNS.ip_url, single_domain_config)
+            dm = DomainRecordChanger(DDNS.ip_url, single_domain_config)
             dm.start_ddns()
-        logging.info("---------DDNS script ended---------")
+        # logging.info("---------DDNS script ended---------")

@@ -24,18 +24,6 @@ class SettingsManager:
             self.is_valid = False
         return log_settings
 
-    def get_ali_client(self):
-        logging.debug("Read ali client settings...")
-        try:
-            aliclient_settings = {"accessKeyId": self.settings["aliClientSettings"]["accessKeyId"],
-                                  "accessSecret": self.settings["aliClientSettings"]["accessSecret"]}
-        except IndexError as e:
-            logging.error("Aliclient settings corrupted or missing: %s" % e)
-            aliclient_settings = None
-            self.is_valid = False
-        logging.debug("Read ali client settings success.")
-        return aliclient_settings
-
     def get_ip_url(self):
         logging.debug("Read get ip url...")
         try:
