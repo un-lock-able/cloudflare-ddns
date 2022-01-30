@@ -22,7 +22,7 @@ class DDNS:
         else:
             log_level = logging.DEBUG
         log_format = "%(asctime)s - %(levelname)s - %(message)s"
-        logging.basicConfig(filename=log_settings["logFileName"],level=log_level,format=log_format)
+        logging.basicConfig(filename=log_settings["logFileName"], level=log_level,format=log_format)
 
     @staticmethod
     def read_settings():

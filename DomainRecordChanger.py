@@ -19,7 +19,8 @@ class DomainRecordChanger:
             "Content-Type": "application/json"
         }
 
-    def do_request(self, request):
+    @staticmethod
+    def do_request(request):
         try:
             response = urlopen(request)
         except urllib.error.HTTPError as error_response:
@@ -120,8 +121,8 @@ class DomainRecordChanger:
                 logging.error("Corrupted configuration, missing ZoneID. DDNS ended.")
                 return
             elif self.apiToken is None:
-                return
                 logging.error("Corrupted configuration, missing ApiToken. DDNS ended.")
+                return
             else:
                 for single_subdomain in self.sub_domains:
                     self.change_single_domain(single_subdomain)
