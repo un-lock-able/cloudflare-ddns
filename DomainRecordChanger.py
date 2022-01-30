@@ -1,6 +1,7 @@
 import logging
 import json
 from urllib.request import urlopen, Request
+import urllib.error
 
 
 class DomainRecordChanger:
@@ -18,12 +19,18 @@ class DomainRecordChanger:
             "Content-Type": "application/json"
         }
 
+    def do_request(self, request):
+        try:
+            response = urlopen(request)
+        except urllib.error.HTTPError as error_response:
+            response = error_response
+        return json.loads(response.read())
+
     def describe_record(self, full_domain_name):
         request_url = "https://api.cloudflare.com/client/v4/zones/%s/dns_records?type=%s&name=%s" % \
                       (self.zoneID, self.record_type, full_domain_name)
         describe_record_request = Request(request_url, headers=self.request_header)
-        response = urlopen(describe_record_request)
-        response_dict = json.loads(response.read())
+        response_dict = self.do_request(describe_record_request)
         if response_dict["success"]:
             return response_dict["result_info"]["total_count"], response_dict["result"]
         else:
@@ -43,8 +50,7 @@ class DomainRecordChanger:
         }
         create_record_request = Request(request_url, data=bytes(json.dumps(request_data), encoding="utf-8"),
                                         headers=self.request_header, method='POST')
-        response = urlopen(create_record_request)
-        response_dict = json.loads(response.read())
+        response_dict = self.do_request(create_record_request)
         if response_dict["success"]:
             logging.info(
                 "Successfully created an %s record for %s." % (self.record_type, full_domain_name))
@@ -64,8 +70,7 @@ class DomainRecordChanger:
         }
         update_record_request = Request(request_url, data=bytes(json.dumps(request_data), encoding="utf-8"),
                                         headers=self.request_header, method='PUT')
-        response = urlopen(update_record_request)
-        response_dict = json.loads(response.read())
+        response_dict = self.do_request(update_record_request)
         if response_dict["success"]:
             logging.info("Successfully updated the %s record for %s." % (self.record_type, full_domain_name))
         else:
