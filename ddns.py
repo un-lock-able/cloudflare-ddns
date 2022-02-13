@@ -30,7 +30,7 @@ class DDNS:
         DDNS.domain_settings = DDNS.settings_manager.get_domain_settings()
 
     @staticmethod
-    def main(settings_path="cloudflareddnsSettings.json.example"):
+    def main(settings_path="cloudflareddnsSettings.json"):
         DDNS.settings_manager = SettingsManager(settings_path)
         if not DDNS.settings_manager.is_valid:
             sys.exit(1)
