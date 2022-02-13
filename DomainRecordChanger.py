@@ -86,8 +86,10 @@ class DomainRecordChanger:
         if subdomain_name is None:
             logging.error('Subdomain missing "name" field, skipped.')
             return
-
-        full_domain_name = subdomain_name + "." + self.domain_name
+        elif subdomain_name == "":
+            full_domain_name = self.domain_name
+        else:
+            full_domain_name = subdomain_name + "." + self.domain_name
         record_count, record_content = self.describe_record(full_domain_name)
         if record_count == -1:
             logging.error("Describe record error.")

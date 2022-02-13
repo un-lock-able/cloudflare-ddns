@@ -1,5 +1,5 @@
 from DomainRecordChanger import DomainRecordChanger
-from SettingsManger import SettingsManager
+from SettingsManager import SettingsManager
 import logging
 import sys
 
