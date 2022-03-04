@@ -29,7 +29,7 @@
                     "//":"ttl and proxied are both optional; set 1 in ttl for automatic; proxied default to true."
                 }
             ],
-            "//": "This will enable IPv4 ddns for @.your_domain1.com, www.your_domain1.com and dns.your_domain1.com"
+            "//": "This will enable IPv4 ddns for @.your_domain1.com and www.your_domain1.com"
         },
         {
             "enabled": true,

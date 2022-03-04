@@ -86,7 +86,7 @@ class DomainRecordChanger:
         if subdomain_name is None:
             logging.error('Subdomain missing "name" field, skipped.')
             return
-        elif subdomain_name == "":
+        elif subdomain_name == "" or subdomain_name == "@":
             full_domain_name = self.domain_name
         else:
             full_domain_name = subdomain_name + "." + self.domain_name
