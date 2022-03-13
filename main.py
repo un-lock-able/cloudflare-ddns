@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from ddns import DDNS
 import sys
 
