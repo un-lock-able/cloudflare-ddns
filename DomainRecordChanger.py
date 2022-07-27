@@ -95,18 +95,18 @@ class DomainRecordChanger:
             logging.error("Describe record error.")
         elif record_count == 0:
             if self.allow_new:
-                logging.info("The Domain %s doesn't have a %s record. Will create a new record for it." %
+                logging.debug("The Domain %s doesn't have a %s record. Will create a new record for it." %
                              (full_domain_name, self.record_type))
                 self.create_record(full_domain_name, subdomain_ttl, subdomain_proxied)
             else:
-                logging.info("The Domain %s doesn't have a %s record. Creating new record is disabled." %
+                logging.debug("The Domain %s doesn't have a %s record. Creating new record is disabled." %
                              (full_domain_name, self.record_type))
         elif record_count == 1:
             if (record_content[0]["content"] != self.ip_value) or (record_content[0]["proxied"] != subdomain_proxied) \
                     or (record_content[0]["ttl"] != subdomain_ttl):
                 self.update_record(full_domain_name, record_content[0]['id'], subdomain_ttl, subdomain_proxied)
             else:
-                logging.info("%s record for %s did not change since it is same as the machine." %
+                logging.debug("%s record for %s did not change since it is same as the machine." %
                              (self.record_type, full_domain_name))
         else:
             logging.error("There are more than 1 %s record for %s. Record for it was left unchanged." %
@@ -114,8 +114,8 @@ class DomainRecordChanger:
 
     def start_ddns(self):
         if self.enabled:
-            logging.info("Start DDNS for %s record under %s." % (self.record_type, self.domain_name))
-            logging.info("Got ip address %s" % self.ip_value)
+            logging.debug("Start DDNS for %s record under %s." % (self.record_type, self.domain_name))
+            logging.debug("Got ip address %s" % self.ip_value)
             if self.domain_name is None:
                 logging.error("Corrupted configuration, missing domainName. DDNS ended.")
                 return
@@ -128,6 +128,6 @@ class DomainRecordChanger:
             else:
                 for single_subdomain in self.sub_domains:
                     self.change_single_domain(single_subdomain)
-                logging.info("DDNS for %s ended." % self.domain_name)
+                logging.debug("DDNS for %s ended." % self.domain_name)
         else:
-            logging.info("DDNS for %s is disabled." % self.domain_name)
+            logging.debug("DDNS for %s is disabled." % self.domain_name)

@@ -50,5 +50,5 @@ class SettingsManager:
     @staticmethod
     def init_log_when_error():
         log_format = "%(asctime)s - %(levelname)s - %(message)s"
-        log_file_name = "aliddns_error_log_%s.log" % time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime(time.time()))
+        log_file_name = "cloudflareddns_error_log_%s.log" % time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime(time.time()))
         logging.basicConfig(filename=log_file_name, level=logging.INFO, format=log_format)
