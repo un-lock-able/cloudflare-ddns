@@ -5,14 +5,15 @@ import urllib.error
 
 
 class DomainRecordChanger:
-    def __init__(self, ip_url, domain_config):
+    def __init__(self, domain_config, ip_addrs):
         self.enabled = domain_config.get("enabled", False)
         self.zoneID = domain_config.get("zoneID", None)
         self.apiToken = domain_config.get("apiToken", None)
         self.sub_domains = domain_config.get("subdomains", [])
         self.domain_name = domain_config.get("domainName", None)
         self.record_type = domain_config.get("recordType", "A")
-        self.ip_value = str(urlopen(ip_url[self.record_type]).read(), encoding='utf-8').strip()
+        # self.ip_value = str(urlopen(ip_url[self.record_type]).read(), encoding='utf-8').strip()
+        self.ip_value = ip_addrs[self.record_type]
         self.allow_new = domain_config.get("createNewRecord", False)
         self.request_header = {
             "Authorization": "Bearer %s" % self.apiToken,

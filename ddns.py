@@ -1,5 +1,6 @@
 from DomainRecordChanger import DomainRecordChanger
 from SettingsManager import SettingsManager
+from urllib.request import urlopen
 import logging
 import sys
 
@@ -8,6 +9,7 @@ class DDNS:
     settings_manager = None
     ip_url = None
     domain_settings = None
+    ip_addrs = dict()
 
     @staticmethod
     def init_logging():
@@ -42,7 +44,9 @@ class DDNS:
         else:
             pass
         # logging.info("--------DDNS script started--------")
+        DDNS.ip_addrs["A"] = str(urlopen(DDNS.ip_url["A"]).read(), encoding='utf-8').strip()
+        DDNS.ip_addrs["AAAA"] = str(urlopen(DDNS.ip_url["AAAA"]).read(), encoding='utf-8').strip()
         for single_domain_config in DDNS.domain_settings:
-            dm = DomainRecordChanger(DDNS.ip_url, single_domain_config)
+            dm = DomainRecordChanger(single_domain_config, DDNS.ip_addrs)
             dm.start_ddns()
         # logging.info("---------DDNS script ended---------")
